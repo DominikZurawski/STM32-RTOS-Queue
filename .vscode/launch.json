@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug STM32 (Proper)",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/RTOS-Queue.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "configFiles": [
+                "openocd.cfg"  
+            ],
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "raw",
+            "preLaunchTask": "Build" 
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make",
+            "args": ["-f", "Makefile", "clean", "all"],
+            "group": "build",
+            "problemMatcher": ["$gcc"],
+            "detail": "Kompiluje projekt"
+        },
+        {
+            "label": "Flash Program (Auto-Reset)",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f", "interface/stlink.cfg",
+                "-f", "target/stm32l4x.cfg",
+                "-c", "reset_config srst_only srst_nogate connect_assert_srst",
+                "-c", "program build/RTOS-LED.elf verify reset exit"
+            ],
+            "group": "build",
+            "dependsOn": "Build", 
+            "problemMatcher": [],
+            "detail": "Wgrywa program z wymuszonym resetem (naprawia init failed)"
+        },
+        {
+            "label": "Start OpenOCD Server",
+            "type": "shell",
+            "isBackground": true,
+            "command": "openocd",
+            "args": [
+                "-f", "interface/stlink.cfg",
+                "-f", "target/stm32l4x.cfg",
+                "-c", "reset_config srst_only srst_nogate connect_assert_srst",
+                "-c", "init; reset run" 
+            ],
+            "problemMatcher": {
+                "pattern": { "regexp": "Listening on port 3333" },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Open On-Chip Debugger",
+                    "endsPattern": "Listening on port 3333"
+                }
+            },
+            "detail": "Uruchamia serwer w tle dla sesji Telnet/Dump"
+        },
+        {
+            "label": "Kill OpenOCD",
+            "type": "shell",
+            "command": "killall openocd || true", 
+            "problemMatcher": [],
+            "detail": "Zamyka wszystkie procesy OpenOCD"
+        }
+    ]
+}
