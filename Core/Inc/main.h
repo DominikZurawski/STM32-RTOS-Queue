@@ -32,10 +32,55 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include <string.h>
+#include <stdio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include  "queue.h"
+#include "timers.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+
+typedef struct
+{
+	uint8_t payload[10];
+	uint32_t len;
+}command_t;
+
+/* Application states */
+typedef enum
+{
+	sMainMenu = 0,
+	sLedEffect,
+	sRtcMenu,
+	sRtcTimeConfig,
+	sRtcDateConfig,
+	sRtcReport,
+}state_t;
+
+extern xTaskHandle handle_cmd_task;
+extern xTaskHandle handle_menu_task;
+extern xTaskHandle handle_print_task;
+extern xTaskHandle handle_led_task;
+extern xTaskHandle handle_rtc_task;
+
+
+extern QueueHandle_t q_data;
+extern QueueHandle_t q_print;
+
+
+extern state_t curr_state;
+
+extern TimerHandle_t  handle_led_timer[4];
+
+extern TimerHandle_t rtc_timer;
+
+
+extern UART_HandleTypeDef huart2;
+extern RTC_HandleTypeDef hrtc;
+
 
 /* USER CODE END ET */
 
@@ -53,12 +98,44 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+void menu_task(void *param);
+void led_task(void *param);
+void rtc_task(void *param);
+void print_task(void *param);
+void cmd_handler_task(void *param);
 
+
+void led_effect_stop(void);
+void led_effect(int n);
+
+void LED_effect1(void);
+void LED_effect2(void);
+void LED_effect3(void);
+void LED_effect4(void);
+
+void show_time_date(void);
+void show_time_date_itm(void);
+void rtc_configure_time(RTC_TimeTypeDef *time);
+void rtc_configure_date(RTC_DateTypeDef *date);
+int validate_rtc_information(RTC_TimeTypeDef *time , RTC_DateTypeDef *date);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
+#define LD4_Pin GPIO_PIN_8
+#define LD4_GPIO_Port GPIOA
+#define LD3_Pin GPIO_PIN_9
+#define LD3_GPIO_Port GPIOA
+#define LD5_Pin GPIO_PIN_10
+#define LD5_GPIO_Port GPIOA
+#define LD6_Pin GPIO_PIN_11
+#define LD6_GPIO_Port GPIOA
+
+#define LED1  LD4_Pin
+#define LED2  LD3_Pin
+#define LED3  LD5_Pin
+#define LED4  LD6_Pin
 
 /* USER CODE END Private defines */
 

@@ -1,0 +1,703 @@
+ARM GAS  /tmp/ccdJPLOo.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"rtc.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/rtc.c"
+  20              		.section	.rodata.show_time_date_itm.str1.4,"aMS",%progbits,1
+  21              		.align	2
+  22              	.LC0:
+  23 0000 414D00   		.ascii	"AM\000"
+  24 0003 00       		.align	2
+  25              	.LC1:
+  26 0004 504D00   		.ascii	"PM\000"
+  27 0007 00       		.align	2
+  28              	.LC2:
+  29 0008 25303264 		.ascii	"%02d:%02d:%02d [%s]\000"
+  29      3A253032 
+  29      643A2530 
+  29      3264205B 
+  29      25735D00 
+  30              		.align	2
+  31              	.LC3:
+  32 001c 09253032 		.ascii	"\011%02d-%02d-%2d\012\000"
+  32      642D2530 
+  32      32642D25 
+  32      32640A00 
+  33              		.section	.text.show_time_date_itm,"ax",%progbits
+  34              		.align	1
+  35              		.global	show_time_date_itm
+  36              		.syntax unified
+  37              		.thumb
+  38              		.thumb_func
+  40              	show_time_date_itm:
+  41              	.LFB235:
+   1:Core/Src/rtc.c **** 
+   2:Core/Src/rtc.c **** 
+   3:Core/Src/rtc.c **** #include "main.h"
+   4:Core/Src/rtc.c **** 
+   5:Core/Src/rtc.c ****  void show_time_date_itm(void)
+   6:Core/Src/rtc.c ****  {
+  42              		.loc 1 6 2 view -0
+  43              		.cfi_startproc
+  44              		@ args = 0, pretend = 0, frame = 24
+  45              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  /tmp/ccdJPLOo.s 			page 2
+
+
+  46 0000 30B5     		push	{r4, r5, lr}
+  47              	.LCFI0:
+  48              		.cfi_def_cfa_offset 12
+  49              		.cfi_offset 4, -12
+  50              		.cfi_offset 5, -8
+  51              		.cfi_offset 14, -4
+  52 0002 89B0     		sub	sp, sp, #36
+  53              	.LCFI1:
+  54              		.cfi_def_cfa_offset 48
+   7:Core/Src/rtc.c **** 	RTC_DateTypeDef rtc_date;
+  55              		.loc 1 7 2 view .LVU1
+   8:Core/Src/rtc.c **** 	RTC_TimeTypeDef rtc_time;
+  56              		.loc 1 8 2 view .LVU2
+   9:Core/Src/rtc.c **** 
+  10:Core/Src/rtc.c **** 	memset(&rtc_date,0,sizeof(rtc_date));
+  57              		.loc 1 10 2 view .LVU3
+  58 0004 0024     		movs	r4, #0
+  59 0006 0794     		str	r4, [sp, #28]
+  11:Core/Src/rtc.c **** 	memset(&rtc_time,0,sizeof(rtc_time));
+  60              		.loc 1 11 2 view .LVU4
+  61 0008 02A9     		add	r1, sp, #8
+  62 000a 0294     		str	r4, [sp, #8]
+  63 000c 4C60     		str	r4, [r1, #4]
+  64 000e 8C60     		str	r4, [r1, #8]
+  65 0010 CC60     		str	r4, [r1, #12]
+  66 0012 0C61     		str	r4, [r1, #16]
+  12:Core/Src/rtc.c **** 
+  13:Core/Src/rtc.c **** 	/* Get the RTC current Time */
+  14:Core/Src/rtc.c **** 	HAL_RTC_GetTime(&hrtc, &rtc_time, RTC_FORMAT_BIN);
+  67              		.loc 1 14 2 view .LVU5
+  68 0014 134D     		ldr	r5, .L5
+  69 0016 2246     		mov	r2, r4
+  70 0018 2846     		mov	r0, r5
+  71 001a FFF7FEFF 		bl	HAL_RTC_GetTime
+  72              	.LVL0:
+  15:Core/Src/rtc.c **** 	/* Get the RTC current Date */
+  16:Core/Src/rtc.c **** 	HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
+  73              		.loc 1 16 2 view .LVU6
+  74 001e 2246     		mov	r2, r4
+  75 0020 07A9     		add	r1, sp, #28
+  76 0022 2846     		mov	r0, r5
+  77 0024 FFF7FEFF 		bl	HAL_RTC_GetDate
+  78              	.LVL1:
+  17:Core/Src/rtc.c **** 
+  18:Core/Src/rtc.c **** 	char *format;
+  79              		.loc 1 18 2 view .LVU7
+  19:Core/Src/rtc.c **** 	format = (rtc_time.TimeFormat == RTC_HOURFORMAT12_AM) ? "AM" : "PM";
+  80              		.loc 1 19 2 view .LVU8
+  81              		.loc 1 19 20 is_stmt 0 view .LVU9
+  82 0028 9DF80B30 		ldrb	r3, [sp, #11]	@ zero_extendqisi2
+  83              		.loc 1 19 63 view .LVU10
+  84 002c BBB9     		cbnz	r3, .L3
+  85              		.loc 1 19 9 discriminator 1 view .LVU11
+  86 002e 0E4B     		ldr	r3, .L5+4
+  87              	.L2:
+  88              	.LVL2:
+  20:Core/Src/rtc.c **** 
+ARM GAS  /tmp/ccdJPLOo.s 			page 3
+
+
+  21:Core/Src/rtc.c **** 
+  22:Core/Src/rtc.c **** 	printf("%02d:%02d:%02d [%s]",rtc_time.Hours, rtc_time.Minutes, rtc_time.Seconds,format);
+  89              		.loc 1 22 2 is_stmt 1 view .LVU12
+  90 0030 0093     		str	r3, [sp]
+  91 0032 9DF80A30 		ldrb	r3, [sp, #10]	@ zero_extendqisi2
+  92              	.LVL3:
+  93              		.loc 1 22 2 is_stmt 0 view .LVU13
+  94 0036 9DF80920 		ldrb	r2, [sp, #9]	@ zero_extendqisi2
+  95 003a 9DF80810 		ldrb	r1, [sp, #8]	@ zero_extendqisi2
+  96 003e 0B48     		ldr	r0, .L5+8
+  97 0040 FFF7FEFF 		bl	printf
+  98              	.LVL4:
+  23:Core/Src/rtc.c **** 	printf("\t%02d-%02d-%2d\n",rtc_date.Month, rtc_date.Date, 2000 + rtc_date.Year);
+  99              		.loc 1 23 2 is_stmt 1 view .LVU14
+ 100              		.loc 1 23 75 is_stmt 0 view .LVU15
+ 101 0044 9DF81F30 		ldrb	r3, [sp, #31]	@ zero_extendqisi2
+ 102              		.loc 1 23 2 view .LVU16
+ 103 0048 03F5FA63 		add	r3, r3, #2000
+ 104 004c 9DF81E20 		ldrb	r2, [sp, #30]	@ zero_extendqisi2
+ 105 0050 9DF81D10 		ldrb	r1, [sp, #29]	@ zero_extendqisi2
+ 106 0054 0648     		ldr	r0, .L5+12
+ 107 0056 FFF7FEFF 		bl	printf
+ 108              	.LVL5:
+  24:Core/Src/rtc.c **** 
+  25:Core/Src/rtc.c ****  }
+ 109              		.loc 1 25 2 view .LVU17
+ 110 005a 09B0     		add	sp, sp, #36
+ 111              	.LCFI2:
+ 112              		.cfi_remember_state
+ 113              		.cfi_def_cfa_offset 12
+ 114              		@ sp needed
+ 115 005c 30BD     		pop	{r4, r5, pc}
+ 116              	.LVL6:
+ 117              	.L3:
+ 118              	.LCFI3:
+ 119              		.cfi_restore_state
+  19:Core/Src/rtc.c **** 
+ 120              		.loc 1 19 9 discriminator 2 view .LVU18
+ 121 005e 054B     		ldr	r3, .L5+16
+ 122 0060 E6E7     		b	.L2
+ 123              	.L6:
+ 124 0062 00BF     		.align	2
+ 125              	.L5:
+ 126 0064 00000000 		.word	hrtc
+ 127 0068 00000000 		.word	.LC0
+ 128 006c 08000000 		.word	.LC2
+ 129 0070 1C000000 		.word	.LC3
+ 130 0074 04000000 		.word	.LC1
+ 131              		.cfi_endproc
+ 132              	.LFE235:
+ 134              		.section	.rodata.show_time_date.str1.4,"aMS",%progbits,1
+ 135              		.align	2
+ 136              	.LC4:
+ 137 0000 0A437572 		.ascii	"\012Current Time&Date\000"
+ 137      72656E74 
+ 137      2054696D 
+ 137      65264461 
+ARM GAS  /tmp/ccdJPLOo.s 			page 4
+
+
+ 137      746500
+ 138 0013 00       		.align	2
+ 139              	.LC5:
+ 140 0014 25733A09 		.ascii	"%s:\011%02d:%02d:%02d [%s]\000"
+ 140      25303264 
+ 140      3A253032 
+ 140      643A2530 
+ 140      3264205B 
+ 141              		.section	.text.show_time_date,"ax",%progbits
+ 142              		.align	1
+ 143              		.global	show_time_date
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	show_time_date:
+ 149              	.LFB236:
+  26:Core/Src/rtc.c **** 
+  27:Core/Src/rtc.c **** void show_time_date(void)
+  28:Core/Src/rtc.c **** {
+ 150              		.loc 1 28 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 24
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154 0000 30B5     		push	{r4, r5, lr}
+ 155              	.LCFI4:
+ 156              		.cfi_def_cfa_offset 12
+ 157              		.cfi_offset 4, -12
+ 158              		.cfi_offset 5, -8
+ 159              		.cfi_offset 14, -4
+ 160 0002 8BB0     		sub	sp, sp, #44
+ 161              	.LCFI5:
+ 162              		.cfi_def_cfa_offset 56
+  29:Core/Src/rtc.c **** 	static char showtime[40];
+ 163              		.loc 1 29 2 view .LVU20
+  30:Core/Src/rtc.c **** 	static char showdate[40];
+ 164              		.loc 1 30 2 view .LVU21
+  31:Core/Src/rtc.c **** 
+  32:Core/Src/rtc.c **** 	RTC_DateTypeDef rtc_date;
+ 165              		.loc 1 32 2 view .LVU22
+  33:Core/Src/rtc.c **** 	RTC_TimeTypeDef rtc_time;
+ 166              		.loc 1 33 2 view .LVU23
+  34:Core/Src/rtc.c **** 
+  35:Core/Src/rtc.c **** 	static char *time = showtime;
+ 167              		.loc 1 35 2 view .LVU24
+  36:Core/Src/rtc.c **** 	static char *date = showdate;
+ 168              		.loc 1 36 2 view .LVU25
+  37:Core/Src/rtc.c **** 
+  38:Core/Src/rtc.c **** 	memset(&rtc_date,0,sizeof(rtc_date));
+ 169              		.loc 1 38 2 view .LVU26
+ 170 0004 0024     		movs	r4, #0
+ 171 0006 0994     		str	r4, [sp, #36]
+  39:Core/Src/rtc.c **** 	memset(&rtc_time,0,sizeof(rtc_time));
+ 172              		.loc 1 39 2 view .LVU27
+ 173 0008 04A9     		add	r1, sp, #16
+ 174 000a 0494     		str	r4, [sp, #16]
+ 175 000c 4C60     		str	r4, [r1, #4]
+ 176 000e 8C60     		str	r4, [r1, #8]
+ARM GAS  /tmp/ccdJPLOo.s 			page 5
+
+
+ 177 0010 CC60     		str	r4, [r1, #12]
+ 178 0012 0C61     		str	r4, [r1, #16]
+  40:Core/Src/rtc.c **** 
+  41:Core/Src/rtc.c **** 	/* Get the RTC current Time */
+  42:Core/Src/rtc.c **** 	HAL_RTC_GetTime(&hrtc, &rtc_time, RTC_FORMAT_BIN);
+ 179              		.loc 1 42 2 view .LVU28
+ 180 0014 1D4D     		ldr	r5, .L11
+ 181 0016 2246     		mov	r2, r4
+ 182 0018 2846     		mov	r0, r5
+ 183 001a FFF7FEFF 		bl	HAL_RTC_GetTime
+ 184              	.LVL7:
+  43:Core/Src/rtc.c **** 	/* Get the RTC current Date */
+  44:Core/Src/rtc.c **** 	HAL_RTC_GetDate(&hrtc, &rtc_date, RTC_FORMAT_BIN);
+ 185              		.loc 1 44 2 view .LVU29
+ 186 001e 2246     		mov	r2, r4
+ 187 0020 09A9     		add	r1, sp, #36
+ 188 0022 2846     		mov	r0, r5
+ 189 0024 FFF7FEFF 		bl	HAL_RTC_GetDate
+ 190              	.LVL8:
+  45:Core/Src/rtc.c **** 
+  46:Core/Src/rtc.c **** 	char *format;
+ 191              		.loc 1 46 2 view .LVU30
+  47:Core/Src/rtc.c **** 	format = (rtc_time.TimeFormat == RTC_HOURFORMAT12_AM) ? "AM" : "PM";
+ 192              		.loc 1 47 2 view .LVU31
+ 193              		.loc 1 47 20 is_stmt 0 view .LVU32
+ 194 0028 9DF81330 		ldrb	r3, [sp, #19]	@ zero_extendqisi2
+ 195              		.loc 1 47 63 view .LVU33
+ 196 002c 63BB     		cbnz	r3, .L9
+ 197              		.loc 1 47 9 discriminator 1 view .LVU34
+ 198 002e 1849     		ldr	r1, .L11+4
+ 199              	.L8:
+ 200              	.LVL9:
+  48:Core/Src/rtc.c **** 
+  49:Core/Src/rtc.c **** 	/* Display time Format : hh:mm:ss [AM/PM] */
+  50:Core/Src/rtc.c **** 	sprintf((char*)showtime,"%s:\t%02d:%02d:%02d [%s]","\nCurrent Time&Date",rtc_time.Hours, rtc_time.
+ 201              		.loc 1 50 2 is_stmt 1 view .LVU35
+ 202              		.loc 1 50 99 is_stmt 0 view .LVU36
+ 203 0030 9DF81130 		ldrb	r3, [sp, #17]	@ zero_extendqisi2
+ 204              		.loc 1 50 117 view .LVU37
+ 205 0034 9DF81220 		ldrb	r2, [sp, #18]	@ zero_extendqisi2
+ 206              		.loc 1 50 2 view .LVU38
+ 207 0038 0291     		str	r1, [sp, #8]
+ 208 003a 0192     		str	r2, [sp, #4]
+ 209 003c 0093     		str	r3, [sp]
+ 210 003e 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 211 0042 144A     		ldr	r2, .L11+8
+ 212 0044 1449     		ldr	r1, .L11+12
+ 213              	.LVL10:
+ 214              		.loc 1 50 2 view .LVU39
+ 215 0046 1548     		ldr	r0, .L11+16
+ 216 0048 FFF7FEFF 		bl	sprintf
+ 217              	.LVL11:
+  51:Core/Src/rtc.c **** 	xQueueSend(q_print,&time,portMAX_DELAY);
+ 218              		.loc 1 51 2 is_stmt 1 view .LVU40
+ 219 004c 144C     		ldr	r4, .L11+20
+ 220 004e 0023     		movs	r3, #0
+ 221 0050 4FF0FF32 		mov	r2, #-1
+ARM GAS  /tmp/ccdJPLOo.s 			page 6
+
+
+ 222 0054 1349     		ldr	r1, .L11+24
+ 223 0056 2068     		ldr	r0, [r4]
+ 224 0058 FFF7FEFF 		bl	xQueueGenericSend
+ 225              	.LVL12:
+  52:Core/Src/rtc.c **** 
+  53:Core/Src/rtc.c **** 	/* Display date Format : date-month-year */
+  54:Core/Src/rtc.c **** 	sprintf((char*)showdate,"\t%02d-%02d-%2d\n",rtc_date.Month, rtc_date.Date, 2000 + rtc_date.Year);
+ 226              		.loc 1 54 2 view .LVU41
+ 227              		.loc 1 54 92 is_stmt 0 view .LVU42
+ 228 005c 9DF82730 		ldrb	r3, [sp, #39]	@ zero_extendqisi2
+ 229              		.loc 1 54 2 view .LVU43
+ 230 0060 03F5FA63 		add	r3, r3, #2000
+ 231 0064 0093     		str	r3, [sp]
+ 232 0066 9DF82630 		ldrb	r3, [sp, #38]	@ zero_extendqisi2
+ 233 006a 9DF82520 		ldrb	r2, [sp, #37]	@ zero_extendqisi2
+ 234 006e 0E49     		ldr	r1, .L11+28
+ 235 0070 0E48     		ldr	r0, .L11+32
+ 236 0072 FFF7FEFF 		bl	sprintf
+ 237              	.LVL13:
+  55:Core/Src/rtc.c **** 	xQueueSend(q_print,&date,portMAX_DELAY);
+ 238              		.loc 1 55 2 is_stmt 1 view .LVU44
+ 239 0076 0023     		movs	r3, #0
+ 240 0078 4FF0FF32 		mov	r2, #-1
+ 241 007c 0C49     		ldr	r1, .L11+36
+ 242 007e 2068     		ldr	r0, [r4]
+ 243 0080 FFF7FEFF 		bl	xQueueGenericSend
+ 244              	.LVL14:
+  56:Core/Src/rtc.c **** }
+ 245              		.loc 1 56 1 is_stmt 0 view .LVU45
+ 246 0084 0BB0     		add	sp, sp, #44
+ 247              	.LCFI6:
+ 248              		.cfi_remember_state
+ 249              		.cfi_def_cfa_offset 12
+ 250              		@ sp needed
+ 251 0086 30BD     		pop	{r4, r5, pc}
+ 252              	.LVL15:
+ 253              	.L9:
+ 254              	.LCFI7:
+ 255              		.cfi_restore_state
+  47:Core/Src/rtc.c **** 
+ 256              		.loc 1 47 9 discriminator 2 view .LVU46
+ 257 0088 0A49     		ldr	r1, .L11+40
+ 258 008a D1E7     		b	.L8
+ 259              	.L12:
+ 260              		.align	2
+ 261              	.L11:
+ 262 008c 00000000 		.word	hrtc
+ 263 0090 00000000 		.word	.LC0
+ 264 0094 00000000 		.word	.LC4
+ 265 0098 14000000 		.word	.LC5
+ 266 009c 00000000 		.word	showtime.3
+ 267 00a0 00000000 		.word	q_print
+ 268 00a4 00000000 		.word	time.2
+ 269 00a8 1C000000 		.word	.LC3
+ 270 00ac 00000000 		.word	showdate.1
+ 271 00b0 00000000 		.word	date.0
+ 272 00b4 04000000 		.word	.LC1
+ARM GAS  /tmp/ccdJPLOo.s 			page 7
+
+
+ 273              		.cfi_endproc
+ 274              	.LFE236:
+ 276              		.section	.text.rtc_configure_time,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	rtc_configure_time
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 283              	rtc_configure_time:
+ 284              	.LVL16:
+ 285              	.LFB237:
+  57:Core/Src/rtc.c **** 
+  58:Core/Src/rtc.c **** 
+  59:Core/Src/rtc.c **** void rtc_configure_time(RTC_TimeTypeDef *time)
+  60:Core/Src/rtc.c **** {
+ 286              		.loc 1 60 1 is_stmt 1 view -0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 0
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              		.loc 1 60 1 is_stmt 0 view .LVU48
+ 291 0000 08B5     		push	{r3, lr}
+ 292              	.LCFI8:
+ 293              		.cfi_def_cfa_offset 8
+ 294              		.cfi_offset 3, -8
+ 295              		.cfi_offset 14, -4
+ 296 0002 0146     		mov	r1, r0
+  61:Core/Src/rtc.c **** 
+  62:Core/Src/rtc.c **** 	time->TimeFormat = RTC_HOURFORMAT12_AM;
+ 297              		.loc 1 62 2 is_stmt 1 view .LVU49
+ 298              		.loc 1 62 19 is_stmt 0 view .LVU50
+ 299 0004 0022     		movs	r2, #0
+ 300 0006 C270     		strb	r2, [r0, #3]
+  63:Core/Src/rtc.c **** 	time->DayLightSaving = RTC_DAYLIGHTSAVING_NONE ;
+ 301              		.loc 1 63 2 is_stmt 1 view .LVU51
+ 302              		.loc 1 63 23 is_stmt 0 view .LVU52
+ 303 0008 C260     		str	r2, [r0, #12]
+  64:Core/Src/rtc.c **** 	time->StoreOperation = RTC_STOREOPERATION_RESET;
+ 304              		.loc 1 64 2 is_stmt 1 view .LVU53
+ 305              		.loc 1 64 23 is_stmt 0 view .LVU54
+ 306 000a 0261     		str	r2, [r0, #16]
+  65:Core/Src/rtc.c **** 
+  66:Core/Src/rtc.c **** 	HAL_RTC_SetTime(&hrtc,time,RTC_FORMAT_BIN);
+ 307              		.loc 1 66 2 is_stmt 1 view .LVU55
+ 308 000c 0148     		ldr	r0, .L15
+ 309              	.LVL17:
+ 310              		.loc 1 66 2 is_stmt 0 view .LVU56
+ 311 000e FFF7FEFF 		bl	HAL_RTC_SetTime
+ 312              	.LVL18:
+  67:Core/Src/rtc.c **** }
+ 313              		.loc 1 67 1 view .LVU57
+ 314 0012 08BD     		pop	{r3, pc}
+ 315              	.L16:
+ 316              		.align	2
+ 317              	.L15:
+ 318 0014 00000000 		.word	hrtc
+ 319              		.cfi_endproc
+ 320              	.LFE237:
+ARM GAS  /tmp/ccdJPLOo.s 			page 8
+
+
+ 322              		.section	.text.rtc_configure_date,"ax",%progbits
+ 323              		.align	1
+ 324              		.global	rtc_configure_date
+ 325              		.syntax unified
+ 326              		.thumb
+ 327              		.thumb_func
+ 329              	rtc_configure_date:
+ 330              	.LVL19:
+ 331              	.LFB238:
+  68:Core/Src/rtc.c **** 
+  69:Core/Src/rtc.c **** 
+  70:Core/Src/rtc.c **** void rtc_configure_date(RTC_DateTypeDef *date)
+  71:Core/Src/rtc.c **** {
+ 332              		.loc 1 71 1 is_stmt 1 view -0
+ 333              		.cfi_startproc
+ 334              		@ args = 0, pretend = 0, frame = 0
+ 335              		@ frame_needed = 0, uses_anonymous_args = 0
+ 336              		.loc 1 71 1 is_stmt 0 view .LVU59
+ 337 0000 08B5     		push	{r3, lr}
+ 338              	.LCFI9:
+ 339              		.cfi_def_cfa_offset 8
+ 340              		.cfi_offset 3, -8
+ 341              		.cfi_offset 14, -4
+ 342 0002 0146     		mov	r1, r0
+  72:Core/Src/rtc.c **** 	HAL_RTC_SetDate(&hrtc,date,RTC_FORMAT_BIN);
+ 343              		.loc 1 72 2 is_stmt 1 view .LVU60
+ 344 0004 0022     		movs	r2, #0
+ 345 0006 0248     		ldr	r0, .L19
+ 346              	.LVL20:
+ 347              		.loc 1 72 2 is_stmt 0 view .LVU61
+ 348 0008 FFF7FEFF 		bl	HAL_RTC_SetDate
+ 349              	.LVL21:
+  73:Core/Src/rtc.c **** }
+ 350              		.loc 1 73 1 view .LVU62
+ 351 000c 08BD     		pop	{r3, pc}
+ 352              	.L20:
+ 353 000e 00BF     		.align	2
+ 354              	.L19:
+ 355 0010 00000000 		.word	hrtc
+ 356              		.cfi_endproc
+ 357              	.LFE238:
+ 359              		.section	.text.validate_rtc_information,"ax",%progbits
+ 360              		.align	1
+ 361              		.global	validate_rtc_information
+ 362              		.syntax unified
+ 363              		.thumb
+ 364              		.thumb_func
+ 366              	validate_rtc_information:
+ 367              	.LVL22:
+ 368              	.LFB239:
+  74:Core/Src/rtc.c **** 
+  75:Core/Src/rtc.c **** 
+  76:Core/Src/rtc.c **** int validate_rtc_information(RTC_TimeTypeDef *time , RTC_DateTypeDef *date)
+  77:Core/Src/rtc.c **** {
+ 369              		.loc 1 77 1 is_stmt 1 view -0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  /tmp/ccdJPLOo.s 			page 9
+
+
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+  78:Core/Src/rtc.c **** 	if(time){
+ 374              		.loc 1 78 2 view .LVU64
+ 375              		.loc 1 78 4 is_stmt 0 view .LVU65
+ 376 0000 40B1     		cbz	r0, .L22
+  79:Core/Src/rtc.c **** 		if( (time->Hours > 12) || (time->Minutes > 59) || (time->Seconds > 59) )
+ 377              		.loc 1 79 3 is_stmt 1 view .LVU66
+ 378              		.loc 1 79 12 is_stmt 0 view .LVU67
+ 379 0002 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 380              		.loc 1 79 5 view .LVU68
+ 381 0004 0C2A     		cmp	r2, #12
+ 382 0006 14D8     		bhi	.L24
+ 383              		.loc 1 79 34 discriminator 1 view .LVU69
+ 384 0008 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+ 385              		.loc 1 79 26 discriminator 1 view .LVU70
+ 386 000a 3B2A     		cmp	r2, #59
+ 387 000c 13D8     		bhi	.L25
+ 388              		.loc 1 79 58 discriminator 2 view .LVU71
+ 389 000e 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+ 390              		.loc 1 79 50 discriminator 2 view .LVU72
+ 391 0010 3B2B     		cmp	r3, #59
+ 392 0012 12D8     		bhi	.L26
+ 393              	.L22:
+  80:Core/Src/rtc.c **** 			return 1;
+  81:Core/Src/rtc.c **** 	}
+  82:Core/Src/rtc.c **** 
+  83:Core/Src/rtc.c **** 	if(date){
+ 394              		.loc 1 83 2 is_stmt 1 view .LVU73
+ 395              		.loc 1 83 4 is_stmt 0 view .LVU74
+ 396 0014 99B1     		cbz	r1, .L27
+  84:Core/Src/rtc.c **** 		if( (date->Date > 31) || (date->WeekDay > 7) || (date->Year > 99) || (date->Month > 12) )
+ 397              		.loc 1 84 3 is_stmt 1 view .LVU75
+ 398              		.loc 1 84 12 is_stmt 0 view .LVU76
+ 399 0016 8B78     		ldrb	r3, [r1, #2]	@ zero_extendqisi2
+ 400              		.loc 1 84 5 view .LVU77
+ 401 0018 1F2B     		cmp	r3, #31
+ 402 001a 12D8     		bhi	.L28
+ 403              		.loc 1 84 33 discriminator 1 view .LVU78
+ 404 001c 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 405              		.loc 1 84 25 discriminator 1 view .LVU79
+ 406 001e 072B     		cmp	r3, #7
+ 407 0020 11D8     		bhi	.L29
+ 408              		.loc 1 84 56 discriminator 2 view .LVU80
+ 409 0022 CB78     		ldrb	r3, [r1, #3]	@ zero_extendqisi2
+ 410              		.loc 1 84 48 discriminator 2 view .LVU81
+ 411 0024 632B     		cmp	r3, #99
+ 412 0026 10D8     		bhi	.L30
+ 413              		.loc 1 84 77 discriminator 3 view .LVU82
+ 414 0028 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 415              		.loc 1 84 69 discriminator 3 view .LVU83
+ 416 002a 0C2B     		cmp	r3, #12
+ 417 002c 0FD8     		bhi	.L31
+  85:Core/Src/rtc.c **** 			return 1;
+  86:Core/Src/rtc.c **** 	}
+  87:Core/Src/rtc.c **** 
+  88:Core/Src/rtc.c **** 	return 0;
+ARM GAS  /tmp/ccdJPLOo.s 			page 10
+
+
+ 418              		.loc 1 88 9 view .LVU84
+ 419 002e 0020     		movs	r0, #0
+ 420              	.LVL23:
+ 421              		.loc 1 88 9 view .LVU85
+ 422 0030 7047     		bx	lr
+ 423              	.LVL24:
+ 424              	.L24:
+  80:Core/Src/rtc.c **** 	}
+ 425              		.loc 1 80 11 view .LVU86
+ 426 0032 0120     		movs	r0, #1
+ 427              	.LVL25:
+  80:Core/Src/rtc.c **** 	}
+ 428              		.loc 1 80 11 view .LVU87
+ 429 0034 7047     		bx	lr
+ 430              	.LVL26:
+ 431              	.L25:
+  80:Core/Src/rtc.c **** 	}
+ 432              		.loc 1 80 11 view .LVU88
+ 433 0036 0120     		movs	r0, #1
+ 434              	.LVL27:
+  80:Core/Src/rtc.c **** 	}
+ 435              		.loc 1 80 11 view .LVU89
+ 436 0038 7047     		bx	lr
+ 437              	.LVL28:
+ 438              	.L26:
+  80:Core/Src/rtc.c **** 	}
+ 439              		.loc 1 80 11 view .LVU90
+ 440 003a 0120     		movs	r0, #1
+ 441              	.LVL29:
+  80:Core/Src/rtc.c **** 	}
+ 442              		.loc 1 80 11 view .LVU91
+ 443 003c 7047     		bx	lr
+ 444              	.LVL30:
+ 445              	.L27:
+ 446              		.loc 1 88 9 view .LVU92
+ 447 003e 0846     		mov	r0, r1
+ 448              	.LVL31:
+ 449              		.loc 1 88 9 view .LVU93
+ 450 0040 7047     		bx	lr
+ 451              	.LVL32:
+ 452              	.L28:
+  85:Core/Src/rtc.c **** 			return 1;
+ 453              		.loc 1 85 11 view .LVU94
+ 454 0042 0120     		movs	r0, #1
+ 455              	.LVL33:
+  85:Core/Src/rtc.c **** 			return 1;
+ 456              		.loc 1 85 11 view .LVU95
+ 457 0044 7047     		bx	lr
+ 458              	.LVL34:
+ 459              	.L29:
+  85:Core/Src/rtc.c **** 			return 1;
+ 460              		.loc 1 85 11 view .LVU96
+ 461 0046 0120     		movs	r0, #1
+ 462              	.LVL35:
+  85:Core/Src/rtc.c **** 			return 1;
+ 463              		.loc 1 85 11 view .LVU97
+ 464 0048 7047     		bx	lr
+ARM GAS  /tmp/ccdJPLOo.s 			page 11
+
+
+ 465              	.LVL36:
+ 466              	.L30:
+  85:Core/Src/rtc.c **** 			return 1;
+ 467              		.loc 1 85 11 view .LVU98
+ 468 004a 0120     		movs	r0, #1
+ 469              	.LVL37:
+  85:Core/Src/rtc.c **** 			return 1;
+ 470              		.loc 1 85 11 view .LVU99
+ 471 004c 7047     		bx	lr
+ 472              	.LVL38:
+ 473              	.L31:
+  85:Core/Src/rtc.c **** 			return 1;
+ 474              		.loc 1 85 11 view .LVU100
+ 475 004e 0120     		movs	r0, #1
+ 476              	.LVL39:
+  89:Core/Src/rtc.c **** }...
+ 477              		.loc 1 89 1 view .LVU101
+ 478 0050 7047     		bx	lr
+ 479              		.cfi_endproc
+ 480              	.LFE239:
+ 482              		.section	.data.date.0,"aw"
+ 483              		.align	2
+ 486              	date.0:
+ 487 0000 00000000 		.word	showdate.1
+ 488              		.section	.bss.showdate.1,"aw",%nobits
+ 489              		.align	2
+ 492              	showdate.1:
+ 493 0000 00000000 		.space	40
+ 493      00000000 
+ 493      00000000 
+ 493      00000000 
+ 493      00000000 
+ 494              		.section	.data.time.2,"aw"
+ 495              		.align	2
+ 498              	time.2:
+ 499 0000 00000000 		.word	showtime.3
+ 500              		.section	.bss.showtime.3,"aw",%nobits
+ 501              		.align	2
+ 504              	showtime.3:
+ 505 0000 00000000 		.space	40
+ 505      00000000 
+ 505      00000000 
+ 505      00000000 
+ 505      00000000 
+ 506              		.text
+ 507              	.Letext0:
+ 508              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 509              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 510              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 511              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h"
+ 512              		.file 6 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rtc.h"
+ 513              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 514              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
+ 515              		.file 9 "Core/Inc/main.h"
+ 516              		.file 10 "/usr/arm-none-eabi/include/stdio.h"
+ 517              		.file 11 "/usr/arm-none-eabi/include/string.h"
+ 518              		.file 12 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h"
+ARM GAS  /tmp/ccdJPLOo.s 			page 12
+
+
+ARM GAS  /tmp/ccdJPLOo.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 rtc.c
+     /tmp/ccdJPLOo.s:21     .rodata.show_time_date_itm.str1.4:00000000 $d
+     /tmp/ccdJPLOo.s:34     .text.show_time_date_itm:00000000 $t
+     /tmp/ccdJPLOo.s:40     .text.show_time_date_itm:00000000 show_time_date_itm
+     /tmp/ccdJPLOo.s:126    .text.show_time_date_itm:00000064 $d
+     /tmp/ccdJPLOo.s:135    .rodata.show_time_date.str1.4:00000000 $d
+     /tmp/ccdJPLOo.s:142    .text.show_time_date:00000000 $t
+     /tmp/ccdJPLOo.s:148    .text.show_time_date:00000000 show_time_date
+     /tmp/ccdJPLOo.s:262    .text.show_time_date:0000008c $d
+     /tmp/ccdJPLOo.s:504    .bss.showtime.3:00000000 showtime.3
+     /tmp/ccdJPLOo.s:498    .data.time.2:00000000 time.2
+     /tmp/ccdJPLOo.s:492    .bss.showdate.1:00000000 showdate.1
+     /tmp/ccdJPLOo.s:486    .data.date.0:00000000 date.0
+     /tmp/ccdJPLOo.s:277    .text.rtc_configure_time:00000000 $t
+     /tmp/ccdJPLOo.s:283    .text.rtc_configure_time:00000000 rtc_configure_time
+     /tmp/ccdJPLOo.s:318    .text.rtc_configure_time:00000014 $d
+     /tmp/ccdJPLOo.s:323    .text.rtc_configure_date:00000000 $t
+     /tmp/ccdJPLOo.s:329    .text.rtc_configure_date:00000000 rtc_configure_date
+     /tmp/ccdJPLOo.s:355    .text.rtc_configure_date:00000010 $d
+     /tmp/ccdJPLOo.s:360    .text.validate_rtc_information:00000000 $t
+     /tmp/ccdJPLOo.s:366    .text.validate_rtc_information:00000000 validate_rtc_information
+     /tmp/ccdJPLOo.s:483    .data.date.0:00000000 $d
+     /tmp/ccdJPLOo.s:489    .bss.showdate.1:00000000 $d
+     /tmp/ccdJPLOo.s:495    .data.time.2:00000000 $d
+     /tmp/ccdJPLOo.s:501    .bss.showtime.3:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_RTC_GetTime
+HAL_RTC_GetDate
+printf
+hrtc
+sprintf
+xQueueGenericSend
+q_print
+HAL_RTC_SetTime
+HAL_RTC_SetDate

@@ -18,7 +18,7 @@
                 "-f", "interface/stlink.cfg",
                 "-f", "target/stm32l4x.cfg",
                 "-c", "reset_config srst_only srst_nogate connect_assert_srst",
-                "-c", "program build/RTOS-LED.elf verify reset exit"
+                "-c", "program build/STM32-RTOS-Queue-n-timers.elf verify reset exit"
             ],
             "group": "build",
             "dependsOn": "Build", 
@@ -52,6 +52,30 @@
             "command": "killall openocd || true", 
             "problemMatcher": [],
             "detail": "Zamyka wszystkie procesy OpenOCD"
+        },
+        {
+            "label": "Generate RTOS Graph",
+            "type": "shell",
+            "command": "./scripts/gen_rtos_graph.sh",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Generuje kolorowy graf RTOS (dot + png)"
+        },
+        {
+            "label": "Watch RTOS Graph",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "inotifywait -m -r -e close_write --format '%w%f' Core/Src Core/Inc | while read file; do echo \"Zmiana w: $file\"; ./scripts/gen_rtos_graph.sh; done"
+            ],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [],
+            "detail": "Automatyczne odświeżanie grafu RTOS (stabilne)"
         }
     ]
 }

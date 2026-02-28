@@ -1,0 +1,738 @@
+ARM GAS  /tmp/ccNEhAda.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"led_effect.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.file 1 "Core/Src/led_effect.c"
+  20              		.section	.text.led_effect_stop,"ax",%progbits
+  21              		.align	1
+  22              		.global	led_effect_stop
+  23              		.syntax unified
+  24              		.thumb
+  25              		.thumb_func
+  27              	led_effect_stop:
+  28              	.LFB235:
+   1:Core/Src/led_effect.c **** #include "main.h"
+   2:Core/Src/led_effect.c **** 
+   3:Core/Src/led_effect.c **** void led_effect_stop(void)
+   4:Core/Src/led_effect.c **** {
+  29              		.loc 1 4 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 82B0     		sub	sp, sp, #8
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 16
+   5:Core/Src/led_effect.c **** 	for(int i = 0 ; i < 4 ; i++)
+  41              		.loc 1 5 2 view .LVU1
+  42              	.LBB2:
+  43              		.loc 1 5 6 view .LVU2
+  44              	.LVL0:
+  45              		.loc 1 5 10 is_stmt 0 view .LVU3
+  46 0004 0024     		movs	r4, #0
+  47              		.loc 1 5 2 view .LVU4
+  48 0006 0BE0     		b	.L2
+  49              	.LVL1:
+  50              	.L3:
+   6:Core/Src/led_effect.c **** 		xTimerStop(handle_led_timer[i],portMAX_DELAY);
+  51              		.loc 1 6 3 is_stmt 1 view .LVU5
+  52 0008 074B     		ldr	r3, .L5
+ARM GAS  /tmp/ccNEhAda.s 			page 2
+
+
+  53 000a 53F82400 		ldr	r0, [r3, r4, lsl #2]
+  54 000e 4FF0FF33 		mov	r3, #-1
+  55 0012 0093     		str	r3, [sp]
+  56 0014 0023     		movs	r3, #0
+  57 0016 1A46     		mov	r2, r3
+  58 0018 0321     		movs	r1, #3
+  59 001a FFF7FEFF 		bl	xTimerGenericCommand
+  60              	.LVL2:
+   5:Core/Src/led_effect.c **** 	for(int i = 0 ; i < 4 ; i++)
+  61              		.loc 1 5 27 discriminator 3 view .LVU6
+  62 001e 0134     		adds	r4, r4, #1
+  63              	.LVL3:
+  64              	.L2:
+   5:Core/Src/led_effect.c **** 	for(int i = 0 ; i < 4 ; i++)
+  65              		.loc 1 5 20 discriminator 1 view .LVU7
+  66 0020 032C     		cmp	r4, #3
+  67 0022 F1DD     		ble	.L3
+  68              	.LBE2:
+   7:Core/Src/led_effect.c **** }
+  69              		.loc 1 7 1 is_stmt 0 view .LVU8
+  70 0024 02B0     		add	sp, sp, #8
+  71              	.LCFI2:
+  72              		.cfi_def_cfa_offset 8
+  73              		@ sp needed
+  74 0026 10BD     		pop	{r4, pc}
+  75              	.LVL4:
+  76              	.L6:
+  77              		.loc 1 7 1 view .LVU9
+  78              		.align	2
+  79              	.L5:
+  80 0028 00000000 		.word	handle_led_timer
+  81              		.cfi_endproc
+  82              	.LFE235:
+  84              		.section	.text.led_effect,"ax",%progbits
+  85              		.align	1
+  86              		.global	led_effect
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	led_effect:
+  92              	.LVL5:
+  93              	.LFB236:
+   8:Core/Src/led_effect.c **** 
+   9:Core/Src/led_effect.c **** void led_effect(int n )
+  10:Core/Src/led_effect.c **** {
+  94              		.loc 1 10 1 is_stmt 1 view -0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              		.loc 1 10 1 is_stmt 0 view .LVU11
+  99 0000 10B5     		push	{r4, lr}
+ 100              	.LCFI3:
+ 101              		.cfi_def_cfa_offset 8
+ 102              		.cfi_offset 4, -8
+ 103              		.cfi_offset 14, -4
+ 104 0002 82B0     		sub	sp, sp, #8
+ 105              	.LCFI4:
+ARM GAS  /tmp/ccNEhAda.s 			page 3
+
+
+ 106              		.cfi_def_cfa_offset 16
+ 107 0004 0446     		mov	r4, r0
+  11:Core/Src/led_effect.c **** 	led_effect_stop();
+ 108              		.loc 1 11 2 is_stmt 1 view .LVU12
+ 109 0006 FFF7FEFF 		bl	led_effect_stop
+ 110              	.LVL6:
+  12:Core/Src/led_effect.c **** 	xTimerStart(handle_led_timer[n-1], portMAX_DELAY);
+ 111              		.loc 1 12 2 view .LVU13
+ 112 000a 601E     		subs	r0, r4, #1
+ 113 000c 084B     		ldr	r3, .L9
+ 114 000e 53F82030 		ldr	r3, [r3, r0, lsl #2]
+ 115 0012 1C46     		mov	r4, r3
+ 116              	.LVL7:
+ 117              		.loc 1 12 2 is_stmt 0 view .LVU14
+ 118 0014 FFF7FEFF 		bl	xTaskGetTickCount
+ 119              	.LVL8:
+ 120              		.loc 1 12 2 view .LVU15
+ 121 0018 0246     		mov	r2, r0
+ 122              		.loc 1 12 2 discriminator 1 view .LVU16
+ 123 001a 4FF0FF33 		mov	r3, #-1
+ 124 001e 0093     		str	r3, [sp]
+ 125 0020 0023     		movs	r3, #0
+ 126 0022 0121     		movs	r1, #1
+ 127 0024 2046     		mov	r0, r4
+ 128 0026 FFF7FEFF 		bl	xTimerGenericCommand
+ 129              	.LVL9:
+  13:Core/Src/led_effect.c **** 
+  14:Core/Src/led_effect.c **** }
+ 130              		.loc 1 14 1 view .LVU17
+ 131 002a 02B0     		add	sp, sp, #8
+ 132              	.LCFI5:
+ 133              		.cfi_def_cfa_offset 8
+ 134              		@ sp needed
+ 135 002c 10BD     		pop	{r4, pc}
+ 136              	.L10:
+ 137 002e 00BF     		.align	2
+ 138              	.L9:
+ 139 0030 00000000 		.word	handle_led_timer
+ 140              		.cfi_endproc
+ 141              	.LFE236:
+ 143              		.section	.text.turn_off_all_leds,"ax",%progbits
+ 144              		.align	1
+ 145              		.global	turn_off_all_leds
+ 146              		.syntax unified
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	turn_off_all_leds:
+ 151              	.LFB237:
+  15:Core/Src/led_effect.c **** 
+  16:Core/Src/led_effect.c **** void turn_off_all_leds(void)
+  17:Core/Src/led_effect.c **** {
+ 152              		.loc 1 17 1 is_stmt 1 view -0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156 0000 08B5     		push	{r3, lr}
+ 157              	.LCFI6:
+ARM GAS  /tmp/ccNEhAda.s 			page 4
+
+
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 3, -8
+ 160              		.cfi_offset 14, -4
+  18:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_RESET);
+ 161              		.loc 1 18 2 view .LVU19
+ 162 0002 0022     		movs	r2, #0
+ 163 0004 4FF40071 		mov	r1, #512
+ 164 0008 4FF09040 		mov	r0, #1207959552
+ 165 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 166              	.LVL10:
+  19:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_RESET);
+ 167              		.loc 1 19 2 view .LVU20
+ 168 0010 0022     		movs	r2, #0
+ 169 0012 4FF48071 		mov	r1, #256
+ 170 0016 4FF09040 		mov	r0, #1207959552
+ 171 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 172              	.LVL11:
+  20:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD5_GPIO_Port, LD5_Pin,GPIO_PIN_RESET);
+ 173              		.loc 1 20 2 view .LVU21
+ 174 001e 0022     		movs	r2, #0
+ 175 0020 4FF48061 		mov	r1, #1024
+ 176 0024 4FF09040 		mov	r0, #1207959552
+ 177 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 178              	.LVL12:
+  21:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin,GPIO_PIN_RESET);
+ 179              		.loc 1 21 2 view .LVU22
+ 180 002c 0022     		movs	r2, #0
+ 181 002e 4FF40061 		mov	r1, #2048
+ 182 0032 4FF09040 		mov	r0, #1207959552
+ 183 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 184              	.LVL13:
+  22:Core/Src/led_effect.c **** }
+ 185              		.loc 1 22 1 is_stmt 0 view .LVU23
+ 186 003a 08BD     		pop	{r3, pc}
+ 187              		.cfi_endproc
+ 188              	.LFE237:
+ 190              		.section	.text.turn_on_all_leds,"ax",%progbits
+ 191              		.align	1
+ 192              		.global	turn_on_all_leds
+ 193              		.syntax unified
+ 194              		.thumb
+ 195              		.thumb_func
+ 197              	turn_on_all_leds:
+ 198              	.LFB238:
+  23:Core/Src/led_effect.c **** 
+  24:Core/Src/led_effect.c **** 
+  25:Core/Src/led_effect.c **** void turn_on_all_leds(void)
+  26:Core/Src/led_effect.c **** {
+ 199              		.loc 1 26 1 is_stmt 1 view -0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203 0000 08B5     		push	{r3, lr}
+ 204              	.LCFI7:
+ 205              		.cfi_def_cfa_offset 8
+ 206              		.cfi_offset 3, -8
+ 207              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccNEhAda.s 			page 5
+
+
+  27:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin,GPIO_PIN_SET);
+ 208              		.loc 1 27 2 view .LVU25
+ 209 0002 0122     		movs	r2, #1
+ 210 0004 4FF40071 		mov	r1, #512
+ 211 0008 4FF09040 		mov	r0, #1207959552
+ 212 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 213              	.LVL14:
+  28:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD4_GPIO_Port, LD4_Pin,GPIO_PIN_SET);
+ 214              		.loc 1 28 2 view .LVU26
+ 215 0010 0122     		movs	r2, #1
+ 216 0012 4FF48071 		mov	r1, #256
+ 217 0016 4FF09040 		mov	r0, #1207959552
+ 218 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 219              	.LVL15:
+  29:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD5_GPIO_Port, LD5_Pin,GPIO_PIN_SET);
+ 220              		.loc 1 29 2 view .LVU27
+ 221 001e 0122     		movs	r2, #1
+ 222 0020 4FF48061 		mov	r1, #1024
+ 223 0024 4FF09040 		mov	r0, #1207959552
+ 224 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 225              	.LVL16:
+  30:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin,GPIO_PIN_SET);
+ 226              		.loc 1 30 2 view .LVU28
+ 227 002c 0122     		movs	r2, #1
+ 228 002e 4FF40061 		mov	r1, #2048
+ 229 0032 4FF09040 		mov	r0, #1207959552
+ 230 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 231              	.LVL17:
+  31:Core/Src/led_effect.c **** }
+ 232              		.loc 1 31 1 is_stmt 0 view .LVU29
+ 233 003a 08BD     		pop	{r3, pc}
+ 234              		.cfi_endproc
+ 235              	.LFE238:
+ 237              		.section	.text.turn_on_odd_leds,"ax",%progbits
+ 238              		.align	1
+ 239              		.global	turn_on_odd_leds
+ 240              		.syntax unified
+ 241              		.thumb
+ 242              		.thumb_func
+ 244              	turn_on_odd_leds:
+ 245              	.LFB239:
+  32:Core/Src/led_effect.c **** 
+  33:Core/Src/led_effect.c **** void turn_on_odd_leds(void)
+  34:Core/Src/led_effect.c **** {
+ 246              		.loc 1 34 1 is_stmt 1 view -0
+ 247              		.cfi_startproc
+ 248              		@ args = 0, pretend = 0, frame = 0
+ 249              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250 0000 08B5     		push	{r3, lr}
+ 251              	.LCFI8:
+ 252              		.cfi_def_cfa_offset 8
+ 253              		.cfi_offset 3, -8
+ 254              		.cfi_offset 14, -4
+  35:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD3_GPIO_Port, LED1,GPIO_PIN_SET);
+ 255              		.loc 1 35 2 view .LVU31
+ 256 0002 0122     		movs	r2, #1
+ 257 0004 4FF48071 		mov	r1, #256
+ARM GAS  /tmp/ccNEhAda.s 			page 6
+
+
+ 258 0008 4FF09040 		mov	r0, #1207959552
+ 259 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 260              	.LVL18:
+  36:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD4_GPIO_Port, LED2,GPIO_PIN_RESET);
+ 261              		.loc 1 36 2 view .LVU32
+ 262 0010 0022     		movs	r2, #0
+ 263 0012 4FF40071 		mov	r1, #512
+ 264 0016 4FF09040 		mov	r0, #1207959552
+ 265 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 266              	.LVL19:
+  37:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD5_GPIO_Port, LED3,GPIO_PIN_SET);
+ 267              		.loc 1 37 2 view .LVU33
+ 268 001e 0122     		movs	r2, #1
+ 269 0020 4FF48061 		mov	r1, #1024
+ 270 0024 4FF09040 		mov	r0, #1207959552
+ 271 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 272              	.LVL20:
+  38:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD6_GPIO_Port, LED4,GPIO_PIN_RESET);
+ 273              		.loc 1 38 2 view .LVU34
+ 274 002c 0022     		movs	r2, #0
+ 275 002e 4FF40061 		mov	r1, #2048
+ 276 0032 4FF09040 		mov	r0, #1207959552
+ 277 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 278              	.LVL21:
+  39:Core/Src/led_effect.c **** }
+ 279              		.loc 1 39 1 is_stmt 0 view .LVU35
+ 280 003a 08BD     		pop	{r3, pc}
+ 281              		.cfi_endproc
+ 282              	.LFE239:
+ 284              		.section	.text.turn_on_even_leds,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	turn_on_even_leds
+ 287              		.syntax unified
+ 288              		.thumb
+ 289              		.thumb_func
+ 291              	turn_on_even_leds:
+ 292              	.LFB240:
+  40:Core/Src/led_effect.c **** 
+  41:Core/Src/led_effect.c **** 
+  42:Core/Src/led_effect.c **** void turn_on_even_leds(void)
+  43:Core/Src/led_effect.c **** {
+ 293              		.loc 1 43 1 is_stmt 1 view -0
+ 294              		.cfi_startproc
+ 295              		@ args = 0, pretend = 0, frame = 0
+ 296              		@ frame_needed = 0, uses_anonymous_args = 0
+ 297 0000 08B5     		push	{r3, lr}
+ 298              	.LCFI9:
+ 299              		.cfi_def_cfa_offset 8
+ 300              		.cfi_offset 3, -8
+ 301              		.cfi_offset 14, -4
+  44:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD3_GPIO_Port, LED1,GPIO_PIN_RESET);
+ 302              		.loc 1 44 2 view .LVU37
+ 303 0002 0022     		movs	r2, #0
+ 304 0004 4FF48071 		mov	r1, #256
+ 305 0008 4FF09040 		mov	r0, #1207959552
+ 306 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 307              	.LVL22:
+ARM GAS  /tmp/ccNEhAda.s 			page 7
+
+
+  45:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD4_GPIO_Port, LED2,GPIO_PIN_SET);
+ 308              		.loc 1 45 2 view .LVU38
+ 309 0010 0122     		movs	r2, #1
+ 310 0012 4FF40071 		mov	r1, #512
+ 311 0016 4FF09040 		mov	r0, #1207959552
+ 312 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 313              	.LVL23:
+  46:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD5_GPIO_Port, LED3,GPIO_PIN_RESET);
+ 314              		.loc 1 46 2 view .LVU39
+ 315 001e 0022     		movs	r2, #0
+ 316 0020 4FF48061 		mov	r1, #1024
+ 317 0024 4FF09040 		mov	r0, #1207959552
+ 318 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 319              	.LVL24:
+  47:Core/Src/led_effect.c **** 	HAL_GPIO_WritePin(LD6_GPIO_Port, LED4,GPIO_PIN_SET);
+ 320              		.loc 1 47 2 view .LVU40
+ 321 002c 0122     		movs	r2, #1
+ 322 002e 4FF40061 		mov	r1, #2048
+ 323 0032 4FF09040 		mov	r0, #1207959552
+ 324 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 325              	.LVL25:
+  48:Core/Src/led_effect.c **** }
+ 326              		.loc 1 48 1 is_stmt 0 view .LVU41
+ 327 003a 08BD     		pop	{r3, pc}
+ 328              		.cfi_endproc
+ 329              	.LFE240:
+ 331              		.section	.text.LED_control,"ax",%progbits
+ 332              		.align	1
+ 333              		.global	LED_control
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 338              	LED_control:
+ 339              	.LVL26:
+ 340              	.LFB241:
+  49:Core/Src/led_effect.c **** 
+  50:Core/Src/led_effect.c **** void LED_control( int value )
+  51:Core/Src/led_effect.c **** {
+ 341              		.loc 1 51 1 is_stmt 1 view -0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              		.loc 1 51 1 is_stmt 0 view .LVU43
+ 346 0000 38B5     		push	{r3, r4, r5, lr}
+ 347              	.LCFI10:
+ 348              		.cfi_def_cfa_offset 16
+ 349              		.cfi_offset 3, -16
+ 350              		.cfi_offset 4, -12
+ 351              		.cfi_offset 5, -8
+ 352              		.cfi_offset 14, -4
+ 353 0002 0546     		mov	r5, r0
+  52:Core/Src/led_effect.c ****   for(int i = 0 ; i < 4 ; i++)
+ 354              		.loc 1 52 3 is_stmt 1 view .LVU44
+ 355              	.LBB3:
+ 356              		.loc 1 52 7 view .LVU45
+ 357              	.LVL27:
+ 358              		.loc 1 52 11 is_stmt 0 view .LVU46
+ARM GAS  /tmp/ccNEhAda.s 			page 8
+
+
+ 359 0004 0024     		movs	r4, #0
+ 360              		.loc 1 52 3 view .LVU47
+ 361 0006 0CE0     		b	.L20
+ 362              	.LVL28:
+ 363              	.L21:
+  53:Core/Src/led_effect.c **** 	  HAL_GPIO_WritePin(LD3_GPIO_Port, (LED1 << i), ((value >> i)& 0x1));
+ 364              		.loc 1 53 4 is_stmt 1 view .LVU48
+ 365              		.loc 1 53 43 is_stmt 0 view .LVU49
+ 366 0008 4FF48071 		mov	r1, #256
+ 367 000c A140     		lsls	r1, r1, r4
+ 368              		.loc 1 53 58 view .LVU50
+ 369 000e 45FA04F2 		asr	r2, r5, r4
+ 370              		.loc 1 53 4 view .LVU51
+ 371 0012 02F00102 		and	r2, r2, #1
+ 372 0016 89B2     		uxth	r1, r1
+ 373 0018 4FF09040 		mov	r0, #1207959552
+ 374 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 375              	.LVL29:
+  52:Core/Src/led_effect.c ****   for(int i = 0 ; i < 4 ; i++)
+ 376              		.loc 1 52 28 is_stmt 1 discriminator 3 view .LVU52
+ 377 0020 0134     		adds	r4, r4, #1
+ 378              	.LVL30:
+ 379              	.L20:
+  52:Core/Src/led_effect.c ****   for(int i = 0 ; i < 4 ; i++)
+ 380              		.loc 1 52 21 discriminator 1 view .LVU53
+ 381 0022 032C     		cmp	r4, #3
+ 382 0024 F0DD     		ble	.L21
+ 383              	.LBE3:
+  54:Core/Src/led_effect.c **** }
+ 384              		.loc 1 54 1 is_stmt 0 view .LVU54
+ 385 0026 38BD     		pop	{r3, r4, r5, pc}
+ 386              		.loc 1 54 1 view .LVU55
+ 387              		.cfi_endproc
+ 388              	.LFE241:
+ 390              		.section	.text.LED_effect1,"ax",%progbits
+ 391              		.align	1
+ 392              		.global	LED_effect1
+ 393              		.syntax unified
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	LED_effect1:
+ 398              	.LFB242:
+  55:Core/Src/led_effect.c **** 
+  56:Core/Src/led_effect.c **** 
+  57:Core/Src/led_effect.c **** void LED_effect1(void)
+  58:Core/Src/led_effect.c **** {
+ 399              		.loc 1 58 1 is_stmt 1 view -0
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 0
+ 402              		@ frame_needed = 0, uses_anonymous_args = 0
+ 403 0000 08B5     		push	{r3, lr}
+ 404              	.LCFI11:
+ 405              		.cfi_def_cfa_offset 8
+ 406              		.cfi_offset 3, -8
+ 407              		.cfi_offset 14, -4
+  59:Core/Src/led_effect.c **** 	static int flag = 1;
+ 408              		.loc 1 59 2 view .LVU57
+ARM GAS  /tmp/ccNEhAda.s 			page 9
+
+
+  60:Core/Src/led_effect.c **** 	(flag ^= 1) ? turn_off_all_leds() : turn_on_all_leds();
+ 409              		.loc 1 60 2 view .LVU58
+ 410              		.loc 1 60 8 is_stmt 0 view .LVU59
+ 411 0002 064A     		ldr	r2, .L27
+ 412 0004 1368     		ldr	r3, [r2]
+ 413 0006 83F00101 		eor	r1, r3, #1
+ 414 000a 1160     		str	r1, [r2]
+ 415              		.loc 1 60 36 view .LVU60
+ 416 000c 012B     		cmp	r3, #1
+ 417 000e 02D0     		beq	.L24
+ 418              		.loc 1 60 16 discriminator 1 view .LVU61
+ 419 0010 FFF7FEFF 		bl	turn_off_all_leds
+ 420              	.LVL31:
+ 421              	.L23:
+  61:Core/Src/led_effect.c **** }
+ 422              		.loc 1 61 1 view .LVU62
+ 423 0014 08BD     		pop	{r3, pc}
+ 424              	.L24:
+  60:Core/Src/led_effect.c **** 	(flag ^= 1) ? turn_off_all_leds() : turn_on_all_leds();
+ 425              		.loc 1 60 38 discriminator 2 view .LVU63
+ 426 0016 FFF7FEFF 		bl	turn_on_all_leds
+ 427              	.LVL32:
+ 428              		.loc 1 61 1 view .LVU64
+ 429 001a FBE7     		b	.L23
+ 430              	.L28:
+ 431              		.align	2
+ 432              	.L27:
+ 433 001c 00000000 		.word	flag.3
+ 434              		.cfi_endproc
+ 435              	.LFE242:
+ 437              		.section	.text.LED_effect2,"ax",%progbits
+ 438              		.align	1
+ 439              		.global	LED_effect2
+ 440              		.syntax unified
+ 441              		.thumb
+ 442              		.thumb_func
+ 444              	LED_effect2:
+ 445              	.LFB243:
+  62:Core/Src/led_effect.c **** 
+  63:Core/Src/led_effect.c **** 
+  64:Core/Src/led_effect.c **** void LED_effect2(void)
+  65:Core/Src/led_effect.c **** {
+ 446              		.loc 1 65 1 is_stmt 1 view -0
+ 447              		.cfi_startproc
+ 448              		@ args = 0, pretend = 0, frame = 0
+ 449              		@ frame_needed = 0, uses_anonymous_args = 0
+ 450 0000 08B5     		push	{r3, lr}
+ 451              	.LCFI12:
+ 452              		.cfi_def_cfa_offset 8
+ 453              		.cfi_offset 3, -8
+ 454              		.cfi_offset 14, -4
+  66:Core/Src/led_effect.c **** 	static int flag = 1;
+ 455              		.loc 1 66 2 view .LVU66
+  67:Core/Src/led_effect.c **** 	(flag ^= 1) ? turn_on_even_leds() : turn_on_odd_leds();
+ 456              		.loc 1 67 2 view .LVU67
+ 457              		.loc 1 67 8 is_stmt 0 view .LVU68
+ 458 0002 064A     		ldr	r2, .L33
+ARM GAS  /tmp/ccNEhAda.s 			page 10
+
+
+ 459 0004 1368     		ldr	r3, [r2]
+ 460 0006 83F00101 		eor	r1, r3, #1
+ 461 000a 1160     		str	r1, [r2]
+ 462              		.loc 1 67 36 view .LVU69
+ 463 000c 012B     		cmp	r3, #1
+ 464 000e 02D0     		beq	.L30
+ 465              		.loc 1 67 16 discriminator 1 view .LVU70
+ 466 0010 FFF7FEFF 		bl	turn_on_even_leds
+ 467              	.LVL33:
+ 468              	.L29:
+  68:Core/Src/led_effect.c **** }
+ 469              		.loc 1 68 1 view .LVU71
+ 470 0014 08BD     		pop	{r3, pc}
+ 471              	.L30:
+  67:Core/Src/led_effect.c **** 	(flag ^= 1) ? turn_on_even_leds() : turn_on_odd_leds();
+ 472              		.loc 1 67 38 discriminator 2 view .LVU72
+ 473 0016 FFF7FEFF 		bl	turn_on_odd_leds
+ 474              	.LVL34:
+ 475              		.loc 1 68 1 view .LVU73
+ 476 001a FBE7     		b	.L29
+ 477              	.L34:
+ 478              		.align	2
+ 479              	.L33:
+ 480 001c 00000000 		.word	flag.2
+ 481              		.cfi_endproc
+ 482              	.LFE243:
+ 484              		.section	.text.LED_effect3,"ax",%progbits
+ 485              		.align	1
+ 486              		.global	LED_effect3
+ 487              		.syntax unified
+ 488              		.thumb
+ 489              		.thumb_func
+ 491              	LED_effect3:
+ 492              	.LFB244:
+  69:Core/Src/led_effect.c **** 
+  70:Core/Src/led_effect.c **** void LED_effect3(void)
+  71:Core/Src/led_effect.c **** {
+ 493              		.loc 1 71 1 is_stmt 1 view -0
+ 494              		.cfi_startproc
+ 495              		@ args = 0, pretend = 0, frame = 0
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 497 0000 08B5     		push	{r3, lr}
+ 498              	.LCFI13:
+ 499              		.cfi_def_cfa_offset 8
+ 500              		.cfi_offset 3, -8
+ 501              		.cfi_offset 14, -4
+  72:Core/Src/led_effect.c **** 	static int i = 0;
+ 502              		.loc 1 72 2 view .LVU75
+  73:Core/Src/led_effect.c **** 	LED_control( 0x1 << (i++ % 4) );
+ 503              		.loc 1 73 2 view .LVU76
+ 504              		.loc 1 73 24 is_stmt 0 view .LVU77
+ 505 0002 064B     		ldr	r3, .L37
+ 506 0004 1868     		ldr	r0, [r3]
+ 507 0006 421C     		adds	r2, r0, #1
+ 508 0008 1A60     		str	r2, [r3]
+ 509              		.loc 1 73 2 view .LVU78
+ 510 000a 00F00300 		and	r0, r0, #3
+ARM GAS  /tmp/ccNEhAda.s 			page 11
+
+
+ 511 000e 0123     		movs	r3, #1
+ 512 0010 03FA00F0 		lsl	r0, r3, r0
+ 513 0014 FFF7FEFF 		bl	LED_control
+ 514              	.LVL35:
+  74:Core/Src/led_effect.c **** }
+ 515              		.loc 1 74 1 view .LVU79
+ 516 0018 08BD     		pop	{r3, pc}
+ 517              	.L38:
+ 518 001a 00BF     		.align	2
+ 519              	.L37:
+ 520 001c 00000000 		.word	i.1
+ 521              		.cfi_endproc
+ 522              	.LFE244:
+ 524              		.section	.text.LED_effect4,"ax",%progbits
+ 525              		.align	1
+ 526              		.global	LED_effect4
+ 527              		.syntax unified
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	LED_effect4:
+ 532              	.LFB245:
+  75:Core/Src/led_effect.c **** 
+  76:Core/Src/led_effect.c **** 
+  77:Core/Src/led_effect.c **** void LED_effect4(void)
+  78:Core/Src/led_effect.c **** {
+ 533              		.loc 1 78 1 is_stmt 1 view -0
+ 534              		.cfi_startproc
+ 535              		@ args = 0, pretend = 0, frame = 0
+ 536              		@ frame_needed = 0, uses_anonymous_args = 0
+ 537 0000 08B5     		push	{r3, lr}
+ 538              	.LCFI14:
+ 539              		.cfi_def_cfa_offset 8
+ 540              		.cfi_offset 3, -8
+ 541              		.cfi_offset 14, -4
+  79:Core/Src/led_effect.c **** 	static int i = 0;
+ 542              		.loc 1 79 2 view .LVU81
+  80:Core/Src/led_effect.c **** 	LED_control( 0x08 >> (i++ % 4) );
+ 543              		.loc 1 80 2 view .LVU82
+ 544              		.loc 1 80 25 is_stmt 0 view .LVU83
+ 545 0002 064B     		ldr	r3, .L41
+ 546 0004 1868     		ldr	r0, [r3]
+ 547 0006 421C     		adds	r2, r0, #1
+ 548 0008 1A60     		str	r2, [r3]
+ 549              		.loc 1 80 2 view .LVU84
+ 550 000a 00F00300 		and	r0, r0, #3
+ 551 000e 0823     		movs	r3, #8
+ 552 0010 43FA00F0 		asr	r0, r3, r0
+ 553 0014 FFF7FEFF 		bl	LED_control
+ 554              	.LVL36:
+  81:Core/Src/led_effect.c **** }
+ 555              		.loc 1 81 1 view .LVU85
+ 556 0018 08BD     		pop	{r3, pc}
+ 557              	.L42:
+ 558 001a 00BF     		.align	2
+ 559              	.L41:
+ 560 001c 00000000 		.word	i.0
+ 561              		.cfi_endproc
+ARM GAS  /tmp/ccNEhAda.s 			page 12
+
+
+ 562              	.LFE245:
+ 564              		.section	.bss.i.0,"aw",%nobits
+ 565              		.align	2
+ 568              	i.0:
+ 569 0000 00000000 		.space	4
+ 570              		.section	.bss.i.1,"aw",%nobits
+ 571              		.align	2
+ 574              	i.1:
+ 575 0000 00000000 		.space	4
+ 576              		.section	.data.flag.2,"aw"
+ 577              		.align	2
+ 580              	flag.2:
+ 581 0000 01000000 		.word	1
+ 582              		.section	.data.flag.3,"aw"
+ 583              		.align	2
+ 586              	flag.3:
+ 587 0000 01000000 		.word	1
+ 588              		.text
+ 589              	.Letext0:
+ 590              		.file 2 "/usr/arm-none-eabi/include/machine/_default_types.h"
+ 591              		.file 3 "/usr/arm-none-eabi/include/sys/_stdint.h"
+ 592              		.file 4 "Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h"
+ 593              		.file 5 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio.h"
+ 594              		.file 6 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
+ 595              		.file 7 "Middlewares/Third_Party/FreeRTOS/Source/include/timers.h"
+ 596              		.file 8 "Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_dma.h"
+ 597              		.file 9 "Core/Inc/main.h"
+ 598              		.file 10 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ARM GAS  /tmp/ccNEhAda.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 led_effect.c
+     /tmp/ccNEhAda.s:21     .text.led_effect_stop:00000000 $t
+     /tmp/ccNEhAda.s:27     .text.led_effect_stop:00000000 led_effect_stop
+     /tmp/ccNEhAda.s:80     .text.led_effect_stop:00000028 $d
+     /tmp/ccNEhAda.s:85     .text.led_effect:00000000 $t
+     /tmp/ccNEhAda.s:91     .text.led_effect:00000000 led_effect
+     /tmp/ccNEhAda.s:139    .text.led_effect:00000030 $d
+     /tmp/ccNEhAda.s:144    .text.turn_off_all_leds:00000000 $t
+     /tmp/ccNEhAda.s:150    .text.turn_off_all_leds:00000000 turn_off_all_leds
+     /tmp/ccNEhAda.s:191    .text.turn_on_all_leds:00000000 $t
+     /tmp/ccNEhAda.s:197    .text.turn_on_all_leds:00000000 turn_on_all_leds
+     /tmp/ccNEhAda.s:238    .text.turn_on_odd_leds:00000000 $t
+     /tmp/ccNEhAda.s:244    .text.turn_on_odd_leds:00000000 turn_on_odd_leds
+     /tmp/ccNEhAda.s:285    .text.turn_on_even_leds:00000000 $t
+     /tmp/ccNEhAda.s:291    .text.turn_on_even_leds:00000000 turn_on_even_leds
+     /tmp/ccNEhAda.s:332    .text.LED_control:00000000 $t
+     /tmp/ccNEhAda.s:338    .text.LED_control:00000000 LED_control
+     /tmp/ccNEhAda.s:391    .text.LED_effect1:00000000 $t
+     /tmp/ccNEhAda.s:397    .text.LED_effect1:00000000 LED_effect1
+     /tmp/ccNEhAda.s:433    .text.LED_effect1:0000001c $d
+     /tmp/ccNEhAda.s:586    .data.flag.3:00000000 flag.3
+     /tmp/ccNEhAda.s:438    .text.LED_effect2:00000000 $t
+     /tmp/ccNEhAda.s:444    .text.LED_effect2:00000000 LED_effect2
+     /tmp/ccNEhAda.s:480    .text.LED_effect2:0000001c $d
+     /tmp/ccNEhAda.s:580    .data.flag.2:00000000 flag.2
+     /tmp/ccNEhAda.s:485    .text.LED_effect3:00000000 $t
+     /tmp/ccNEhAda.s:491    .text.LED_effect3:00000000 LED_effect3
+     /tmp/ccNEhAda.s:520    .text.LED_effect3:0000001c $d
+     /tmp/ccNEhAda.s:574    .bss.i.1:00000000 i.1
+     /tmp/ccNEhAda.s:525    .text.LED_effect4:00000000 $t
+     /tmp/ccNEhAda.s:531    .text.LED_effect4:00000000 LED_effect4
+     /tmp/ccNEhAda.s:560    .text.LED_effect4:0000001c $d
+     /tmp/ccNEhAda.s:568    .bss.i.0:00000000 i.0
+     /tmp/ccNEhAda.s:565    .bss.i.0:00000000 $d
+     /tmp/ccNEhAda.s:571    .bss.i.1:00000000 $d
+     /tmp/ccNEhAda.s:577    .data.flag.2:00000000 $d
+     /tmp/ccNEhAda.s:583    .data.flag.3:00000000 $d
+
+UNDEFINED SYMBOLS
+xTimerGenericCommand
+handle_led_timer
+xTaskGetTickCount
+HAL_GPIO_WritePin

@@ -1,0 +1,66 @@
+digraph RTOS {
+  rankdir=LR;
+  compound=true;
+  graph [
+    fontname="Helvetica", 
+    bgcolor="white", 
+    nodesep=0.15, 
+    ranksep=0.6, 
+    splines=spline,
+    concentrate=true,
+    overlap=false
+  ];
+  node [
+    fontname="Helvetica", 
+    style="filled,rounded", 
+    color="#333333", 
+    height=0.25, 
+    fontsize=10,
+    margin="0.1,0.05"
+  ];
+  edge [fontname="Helvetica", fontsize=8, arrowsize=0.6];
+"freertos.c" [label="freertos.c", shape=box, fillcolor="#eeeeee"];
+"FreeRTOSConfig.h" [label="FreeRTOSConfig.h", shape=box, fillcolor="#eeeeee"];
+"led_effect.c" [label="led_effect.c", shape=box, fillcolor="#eeeeee"];
+"main.c" [label="main.c", shape=box, fillcolor="#eeeeee"];
+"rtc.c" [label="rtc.c", shape=box, fillcolor="#eeeeee"];
+"stm32l4xx_hal_msp.c" [label="stm32l4xx_hal_msp.c", shape=box, fillcolor="#eeeeee"];
+"stm32l4xx_hal_timebase_tim.c" [label="stm32l4xx_hal_timebase_tim.c", shape=box, fillcolor="#eeeeee"];
+"stm32l4xx_it.c" [label="stm32l4xx_it.c", shape=box, fillcolor="#eeeeee"];
+"stm32l4xx_it.h" [label="stm32l4xx_it.h", shape=box, fillcolor="#eeeeee"];
+"syscalls.c" [label="syscalls.c", shape=box, fillcolor="#eeeeee"];
+"sysmem.c" [label="sysmem.c", shape=box, fillcolor="#eeeeee"];
+"system_stm32l4xx.c" [label="system_stm32l4xx.c", shape=box, fillcolor="#eeeeee"];
+"task_handler.c" [label="task_handler.c", shape=box, fillcolor="#eeeeee"];
+"cmd_handler_task" [label="Task: cmd_handler_task", shape=box, fillcolor="#b6f2c2"];
+"led_task" [label="Task: led_task", shape=box, fillcolor="#b6f2c2"];
+"menu_task" [label="Task: menu_task", shape=box, fillcolor="#b6f2c2"];
+"print_task" [label="Task: print_task", shape=box, fillcolor="#b6f2c2"];
+"rtc_task" [label="Task: rtc_task", shape=box, fillcolor="#b6f2c2"];
+"StartDefaultTask" [label="Task: StartDefaultTask", shape=box, fillcolor="#b6f2c2"];
+"q_data" [label="Queue: q_data", shape=ellipse, fillcolor="#b7d7ff"];
+"q_print" [label="Queue: q_print", shape=ellipse, fillcolor="#b7d7ff"];
+"TIM6_DAC_IRQHandler" [label="TIM6_DAC_IRQHandler", shape=diamond, fillcolor="#ff9999"];
+"USART2_IRQHandler" [label="USART2_IRQHandler", shape=diamond, fillcolor="#ff9999"];
+"main.c" -> "menu_task" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "cmd_handler_task" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "print_task" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "led_task" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "rtc_task" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "StartDefaultTask" [color="#228b22", style=dashed, group="main.c"];
+"main.c" -> "q_data" [label="recv/sendISR", color="#b22222", dir="both", arrowtail=dot, tailcolor="#ff8c00"];
+"rtc.c" -> "q_print" [label="send", color="#2e8b57"];
+"q_data" -> "task_handler.c" [label="recv", color="#ff8c00"];
+"task_handler.c" -> "q_print" [label="recv/send", color="#2e8b57", dir="both", arrowtail=dot, tailcolor="#ff8c00"];
+"USART2_IRQHandler" -> "stm32l4xx_it.c" [color="#b22222"];
+"TIM6_DAC_IRQHandler" -> "stm32l4xx_it.c" [color="#b22222"];
+"USART2_IRQHandler" -> "stm32l4xx_it.h" [color="#b22222"];
+"TIM6_DAC_IRQHandler" -> "stm32l4xx_it.h" [color="#b22222"];
+  subgraph cluster_legend {
+    label="Legend"; style=dashed; color=gray;
+    l1 [label="Source file", shape=box, fillcolor="#eeeeee"];
+    l2 [label="Task", shape=box, fillcolor="#b6f2c2"];
+    l3 [label="Queue", shape=ellipse, fillcolor="#b7d7ff"];
+    l4 [label="ISR", shape=diamond, fillcolor="#ff9999"];
+  }
+}
